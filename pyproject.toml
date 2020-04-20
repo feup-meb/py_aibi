@@ -3,6 +3,10 @@ name = "py_aibi"
 version = "0.1.0"
 description = "Exercícios da disciplina AIBI (Análise de Imagem Biomédica) do curso de Mestrado em Engenharia Biomédica da FEUP (Faculdade de Engenharia da Universidade do Porto)."
 authors = ["Leandro Gabriel <lassisg@gmail.com>"]
+maintainers = ["Leandro Gabriel <lassisg@gmail.com>"]
+readme = "README.rst"
+homepage = ""
+repository = "https://github.com/lassisg/py_aibi/"
 
 [tool.poetry.dependencies]
 python = "^3.8"
