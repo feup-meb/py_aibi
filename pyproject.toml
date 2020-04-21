@@ -11,6 +11,7 @@ repository = "https://github.com/lassisg/py_aibi/"
 [tool.poetry.dependencies]
 python = "^3.8"
 scikit-image = "^0.16.2"
+pydicom = "^1.4.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

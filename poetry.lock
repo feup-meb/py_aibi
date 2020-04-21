@@ -172,6 +172,14 @@ version = "1.8.1"
 
 [[package]]
 category = "main"
+description = "Pure python package for DICOM medical file reading and writing"
+name = "pydicom"
+optional = false
+python-versions = "*"
+version = "1.4.2"
+
+[[package]]
+category = "main"
 description = "Python parsing module"
 name = "pyparsing"
 optional = false
@@ -271,7 +279,7 @@ python-versions = "*"
 version = "0.1.9"
 
 [metadata]
-content-hash = "d573e6b199b9be08187ea6054dcd87153a2f3e8b7faa9085dd3ae1e18437a633"
+content-hash = "200ec99608f8bf58994fbe53bc920b11f0877d2f624b17a0cc70b89a037cdc81"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -400,6 +408,10 @@ pluggy = [
 py = [
     {file = "py-1.8.1-py2.py3-none-any.whl", hash = "sha256:c20fdd83a5dbc0af9efd622bee9a5564e278f6380fffcacc43ba6f43db2813b0"},
     {file = "py-1.8.1.tar.gz", hash = "sha256:5e27081401262157467ad6e7f851b7aa402c5852dbcb3dae06768434de5752aa"},
+]
+pydicom = [
+    {file = "pydicom-1.4.2-py2.py3-none-any.whl", hash = "sha256:f315ba2296346f4f9913c269618201e170b9326362e2ada6041ca91b7cb2117b"},
+    {file = "pydicom-1.4.2.tar.gz", hash = "sha256:9488495a9f3e202d1219f7cb165aee0de31efd512d938c0226d34147ce860391"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
