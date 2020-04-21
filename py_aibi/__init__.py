@@ -19,9 +19,8 @@ def execute(pl_class: int, exercise: int, item: str = "") -> None:
 
     except KeyError as class_error:
         print(f"Sorry, class {pl_class} not found... \
-            \nError: Package {__name__} has no module {class_error}")
+              \nError: Package {__name__} has no module {class_error}")
 
     except AttributeError as exercise_error:
-        print(
-            f"Sorry, class {pl_class} has no exercise {exercise}...\
-            \nError: {exercise_error}")
+        print(f"Sorry, class {pl_class} has no exercise {exercise}...\
+              \nError: {exercise_error}")

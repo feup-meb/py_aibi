@@ -2,9 +2,9 @@ import py_aibi as aibi
 
 
 def main():
-    pl_class = 10
-    exercise = 15
-    item = ""
+    pl_class = 1
+    exercise = 1
+    item = "b"
 
     aibi.execute(pl_class, exercise, item)
 
