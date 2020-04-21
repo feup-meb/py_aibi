@@ -42,8 +42,9 @@ def ex_2(item: str = "") -> None:
             duas variáveis (Img_Dicom e Info_dicom).")
 
     elif item == "d":
-        # Info_dicom = dicominfo("Chest_XRay.dcm")
-        pass
+        info_dicom = dcmread(f"{img_folder}/Chest_XRay.dcm")
+        pixel_representation = info_dicom.PixelRepresentation
+        print(pixel_representation)
 
 
 def ex_3(item: str = "") -> None:
