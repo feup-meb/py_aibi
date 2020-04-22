@@ -93,55 +93,53 @@ def ex_4(item: str = "") -> None:
         plt.show()
 
     elif item == "b":
+        img_2 = io.imread(f"{img_folder}/mamografia.bmp")
+
+        plt.gray()
+        plt.imshow(img_2)
+        plt.show()
+
+    elif item == "c":
         img_1 = io.imread(f"{img_folder}/mona.tif")
         img_2 = io.imread(f"{img_folder}/mamografia.bmp")
-        # img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
 
-        # plt.gray()
         plt.figure(), plt.gray(), plt.imshow(img_1)
         plt.figure(), plt.gray(), plt.imshow(img_2)
         plt.show()
 
-    elif item == "c":
-        # imshow(Img_1), figure, imshow(Img_2)
-        # % O comando 'figure' permite apresentar a segunda imagem. Sem ele, \
-        # % a segunda imagem não é exibida.
-        pass
-
     elif item == "d":
-        # figure, subplot(1, 2, 1), imshow(Img_1)
-        # subplot(1, 2, 2), imshow(Img_2)
-        # % O comando subplot divide a figura em partes. Neste caso, dividiu \
-        # % em 2 partes.
-        # % No primeiro comando, a imagem fica na 1a parte, á esquerda.
-        # % No segundo, a imagem fica na 2a parte, à direita.
-        pass
+        img_1 = io.imread(f"{img_folder}/mona.tif")
+        img_2 = io.imread(f"{img_folder}/mamografia.bmp")
+
+        plt.figure(), plt.gray(), plt.subplot(1, 2, 1), plt.imshow(img_1)
+        plt.subplot(1, 2, 2), plt.imshow(img_2)
+        plt.show()
 
     elif item == "e":
-        # imshow(Img_Dicom)
-        # % Exibe a imgem com 'range' de dados padrão, inadequado para a \
-        # % imagem dicom.
+        img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
 
-        # imshow(Img_Dicom, [])
-        # % Exibe a imgem com 'range' de dados apropriado para a imagem dicom.
-        pass
+        plt.gray()
+        plt.imshow(img_dicom)
+        plt.show()
 
     elif item == "f":
-        # close all; % close all the open windows
-        # figure(1), imshow(Img_Dicom), figure(2), imshow(Img_Dicom, [])
-        # figure(3), imshow(Img_Dicom, [0 255])
-        # figure(4), imshow(Img_Dicom, [255 1024])
-        # % Cada imagen possui diferentes 'ranges' da valor da escala de \
-        # % cinza, de forma que possuem mais branco à medida que o range \
-        # % aumenta.
-        pass
+        img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
+
+        plt.figure(), plt.gray()
+        plt.imshow(img_dicom), plt.title("Original")
+        plt.figure(), plt.gray()
+        plt.imshow(img_dicom, vmin=0, vmax=255), plt.title("0 -> 255")
+        plt.figure(), plt.gray()
+        plt.imshow(img_dicom, vmin=255, vmax=1024), plt.title("255 -> 1024")
+        plt.show()
 
 
 def ex_5(item: str = "") -> None:
 
-    print(f"Aula 1, exercício 5{item}")
+    print(f"\nAula 1, exercício 5{item}")
 
     if item == "a":
+        # TODO: Find imtool command for python
         # imtool(Img_1)
         pass
 
@@ -383,7 +381,7 @@ def ex_homework() -> None:
 if __name__ == "__main__":
     pl_class = 1
     exercise = 4
-    item = "b"
+    item = "f"
 
     function_name = f"ex_{exercise}"
     function_to_call = locals()[function_name]
