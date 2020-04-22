@@ -1,13 +1,12 @@
 from skimage import io
 from pydicom import dcmread
-
-_, pl_class = __name__.split(".")
-img_folder = f"./assets/{pl_class}"
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def ex_1(item: str = "") -> None:
 
-    print(f"Aula 1, exercício 1{item}\n")
+    print(f"\nAula 1, exercício 1{item}\n")
 
     if item == "a":
         print("Executar 'imformats' no MatLAB para saber os formatos aceitos.")
@@ -27,7 +26,7 @@ def ex_1(item: str = "") -> None:
 
 def ex_2(item: str = "") -> None:
 
-    print(f"Aula 1, exercício 2{item}")
+    print(f"\nAula 1, exercício 2{item}")
 
     if item == "a":
         img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
@@ -49,40 +48,59 @@ def ex_2(item: str = "") -> None:
 
 def ex_3(item: str = "") -> None:
 
-    print(f"Aula 1, exercício 3{item}")
+    print(f"\nAula 1, exercício 3{item}")
 
     if item == "a":
-        # help size
-        pass
+        help(np.shape)
 
     elif item == "b":
-        # help whos
-        pass
+        help('type')
 
     elif item == "c":
-        # size(Img_1)
-        # size(Img_2)
-        # size(Img_Dicom)
-        pass
+        img_1 = io.imread(f"{img_folder}/mona.tif")
+        img_2 = io.imread(f"{img_folder}/mamografia.bmp")
+        img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
+
+        img_1_size = (img_1)
+        img_2_size = (img_2)
+        img_dicom_size = (img_dicom)
+
+        print(f"Size of img_1 is: {np.shape(img_1_size)}")
+        print(f"Size of img_2 is: {np.shape(img_2_size)}")
+        print(f"Size of img_dicom is: {np.shape(img_dicom_size)}")
 
     elif item == "d":
-        # %    D. Use the functions whos for getting additional information \
-        # %       about the variables Img_1, Img_2 and Img_Dicom.
+        # There is no python function similar to funtcion whos.
         # whos __ Img_1 Img_2 Img_Dicom
-        pass
+        img_1 = io.imread(f"{img_folder}/mona.tif")
+        img_2 = io.imread(f"{img_folder}/mamografia.bmp")
+        img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
+
+        print(f"Size of img_1 is: {type(img_1)}")
+        print(f"Size of img_2 is: {type(img_2)}")
+        print(f"Size of img_dicom is: {type(img_dicom)}")
 
 
 def ex_4(item: str = "") -> None:
 
-    print(f"Aula 1, exercício 4{item}")
+    print(f"\nAula 1, exercício 4{item}")
 
     if item == "a":
-        # imshow(Img_1)
-        pass
+        img_1 = io.imread(f"{img_folder}/mona.tif")
+
+        plt.gray()
+        plt.imshow(img_1)
+        plt.show()
 
     elif item == "b":
-        # imshow(Img_2)
-        pass
+        img_1 = io.imread(f"{img_folder}/mona.tif")
+        img_2 = io.imread(f"{img_folder}/mamografia.bmp")
+        # img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
+
+        # plt.gray()
+        plt.figure(), plt.gray(), plt.imshow(img_1)
+        plt.figure(), plt.gray(), plt.imshow(img_2)
+        plt.show()
 
     elif item == "c":
         # imshow(Img_1), figure, imshow(Img_2)
@@ -360,3 +378,18 @@ def ex_homework() -> None:
     # end
 
     # full_cell
+
+
+if __name__ == "__main__":
+    pl_class = 1
+    exercise = 4
+    item = "b"
+
+    function_name = f"ex_{exercise}"
+    function_to_call = locals()[function_name]
+    img_folder = f"./assets/pl_{pl_class:02d}"
+    function_to_call(item)
+
+else:
+    img_folder = f"./assets/{pl_class}"
+    _, pl_class = __name__.split(".")
