@@ -3,6 +3,7 @@ from pydicom import dcmread
 import numpy as np
 import matplotlib.pyplot as plt
 from medpy.io import load, save
+from PIL import Image
 
 
 def ex_1(item: str = "") -> None:
@@ -30,8 +31,8 @@ def ex_2(item: str = "") -> None:
     print(f"\nAula 1, exercício 2{item}")
 
     if item == "a":
-        img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
-        print(img_dicom)
+        img_dicom = dcmread(f"{img_folder}/Chest_XRay.dcm")
+        print(img_dicom.pixel_array)
 
     elif item == "b":
         info_dicom = dcmread(f"{img_folder}/Chest_XRay.dcm")
@@ -60,21 +61,17 @@ def ex_3(item: str = "") -> None:
     elif item == "c":
         img_1 = io.imread(f"{img_folder}/mona.tif")
         img_2 = io.imread(f"{img_folder}/mamografia.bmp")
-        img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
+        img_dicom = dcmread(f"{img_folder}/Chest_XRay.dcm")
 
-        img_1_size = (img_1)
-        img_2_size = (img_2)
-        img_dicom_size = (img_dicom)
-
-        print(f"Size of img_1 is: {np.shape(img_1_size)}")
-        print(f"Size of img_2 is: {np.shape(img_2_size)}")
-        print(f"Size of img_dicom is: {np.shape(img_dicom_size)}")
+        print(f"Size of img_1 is: {np.shape(img_1)}")
+        print(f"Size of img_2 is: {np.shape(img_2)}")
+        print(f"Size of img_dicom is: {np.shape(img_dicom.pixel_array)}")
 
     elif item == "d":
         img_1 = io.imread(f"{img_folder}/mona.tif")
         img_2 = io.imread(f"{img_folder}/mamografia.bmp")
-        img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
-
+        info_dicom = dcmread(f"{img_folder}/Chest_XRay.dcm")
+        img_dicom = info_dicom.pixel_array
         # whos __ Img_1 Img_2 Img_Dicom
         print("There is no equivalent function for 'whos' in Python.")
         print(f"On MatLAB, class = uint16. On Python is int16.")
@@ -95,12 +92,14 @@ def ex_4(item: str = "") -> None:
     if item == "a":
         img_1 = io.imread(f"{img_folder}/mona.tif")
 
+        # plt.imshow(img_1, cmap='gray')
         io.imshow(img_1)
-        io.show()
+        plt.show()
 
     elif item == "b":
         img_2 = io.imread(f"{img_folder}/mamografia.bmp")
 
+        # plt.gray(), plt.imshow(img_2)
         io.imshow(img_2)
         io.show()
 
@@ -122,15 +121,14 @@ def ex_4(item: str = "") -> None:
         io.show()
 
     elif item == "e":
-        img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
+        info_dicom = dcmread(f"{img_folder}/Chest_XRay.dcm")
 
         # for some reason, fails to keep in greyscale. Need to force.
-        plt.gray()
-        plt.imshow(img_dicom.pixel_array)
-        plt.show()
+        plt.gray(), plt.imshow(info_dicom.pixel_array), plt.show()
 
     elif item == "f":
-        img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
+        info_dicom = dcmmread(f"{img_folder}/Chest_XRay.dcm")
+        img_dicom = info_dicom.pixel_array
 
         # for some reason, fails to keep in greyscale. Need to force.
         plt.figure(), plt.gray()
@@ -204,7 +202,8 @@ def ex_7(item: str = "") -> None:
 
     elif item == "b":
         img_2 = io.imread(f"{img_folder}/mamografia.bmp")
-        img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
+        info_dicom = dcmread(f"{img_folder}/Chest_XRay.dcm")
+        img_dicom = info_dicom.pixel_array
 
         img_2_double = util.img_as_float32(img_2)
         img_dicom_uint8 = util.img_as_ubyte(img_dicom)
@@ -213,16 +212,19 @@ def ex_7(item: str = "") -> None:
 
     elif item == "c":
         img_2 = io.imread(f"{img_folder}/mamografia.bmp")
-        img_dicom = dcmread(f"{img_folder}/Chest_XRay.dcm")
+        info_dicom = dcmread(f"{img_folder}/Chest_XRay.dcm")
+        img_dicom = info_dicom.pixel_array
 
         img_2_double = util.img_as_float64(img_2)
-        img_dicom_uint8 = util.img_as_ubyte(img_dicom.pixel_array)
+        img_dicom_uint8 = util.img_as_ubyte(img_dicom)
         img_4_double = img_2_double * 4
         img_4 = util.img_as_ubyte(img_2_double)
 
         plt.figure(), io.imshow(img_2_double), plt.title("1 white")
-        plt.figure(), plt.gray(), plt.imshow(img_dicom_uint8), plt.title("2 torax")
-        plt.figure(), plt.gray(), plt.imshow(img_4_double), plt.title("3 white")
+        plt.figure(), plt.gray(),
+        plt.imshow(img_dicom_uint8), plt.title("2 torax")
+        plt.figure(), plt.gray(),
+        plt.imshow(img_4_double), plt.title("3 white")
         plt.figure(), io.imshow(img_4), plt.title("4 mamografia")
         plt.show()
 
@@ -232,11 +234,16 @@ def ex_8(item: str = "") -> None:
     print(f"Aula 1, exercício 8{item}")
 
     if item == "a":
-        # a = [-0.5 0.5; 0.75 1.5]
-        # b = uint8(a)
+        a = np.array([[-0.5000, 0.5000],
+                      [0.7500, 1.5000]])
+        print(a)
+        print("Caution with wrong round in python")
+        b = np.round(a).astype(np.uint8)
+        print(b)
+        # TODO: Find a way to convert array to image...
+        print("Not able to convert array to image...")
         # c = im2uint8(a)
-        # % As matrizes resultantes demonstram o explicado no enunciado.
-        pass
+        c = bytescale(a)
 
     elif item == "b":
         # d = uint8([25 50; 128 200])
