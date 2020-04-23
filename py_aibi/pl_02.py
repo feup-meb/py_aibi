@@ -1,8 +1,5 @@
 from skimage import io
 
-_, pl_class = __name__.split(".")
-img_folder = f"./assets/{pl_class}"
-
 
 def ex_1(item: str = "") -> None:
 
@@ -558,3 +555,18 @@ def ex_7(item: str = "") -> None:
 
         # % end
         pass
+
+
+if __name__ == "__main__":
+    pl_class = 2
+    exercise = 1
+    item = "a"
+
+    function_name = f"ex_{exercise}"
+    function_to_call = locals()[function_name]
+    function_to_call(item)
+
+else:
+    _, pl_class = __name__.split(".")
+
+img_folder = f"./assets/{pl_class}"
