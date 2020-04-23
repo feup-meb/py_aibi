@@ -1,4 +1,4 @@
-from skimage import io
+from skimage import io, util
 from pydicom import dcmread
 import numpy as np
 import matplotlib.pyplot as plt
@@ -203,23 +203,28 @@ def ex_7(item: str = "") -> None:
         print("uint8, uint16, double and logical")
 
     elif item == "b":
-        # Img_2_double = double(Img_2);
-        # Img_Dicom_uint8 = uint8(Img_Dicom);
-        # Img_4_double = Img_2_double .* 4;
-        # Img_4 = uint8(Img_4_double);
-        pass
+        img_2 = io.imread(f"{img_folder}/mamografia.bmp")
+        img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
+
+        img_2_double = util.img_as_float32(img_2)
+        img_dicom_uint8 = util.img_as_ubyte(img_dicom)
+        img_4_double = img_2_double * 4
+        img_4 = util.img_as_ubyte(img_2_double)
 
     elif item == "c":
-        # figure(1), subplot(1, 2, 1), imshow(Img_2_double)
-        # subplot(1, 2, 2), imshow(Img_Dicom_uint8)
-        # figure(2), subplot(1, 2, 1), imshow(Img_4_double)
-        # subplot(1, 2, 2), imshow(Img_4)
-        # figure(1), imshow(Img_2_double)
-        # figure(2), imshow(Img_Dicom_uint8)
-        # figure(3), imshow(Img_4_double)
-        # figure(4), imshow(Img_4)
-        # % As imagens em 'uint8' ficaram completamente brancas
-        pass
+        img_2 = io.imread(f"{img_folder}/mamografia.bmp")
+        img_dicom = dcmread(f"{img_folder}/Chest_XRay.dcm")
+
+        img_2_double = util.img_as_float64(img_2)
+        img_dicom_uint8 = util.img_as_ubyte(img_dicom.pixel_array)
+        img_4_double = img_2_double * 4
+        img_4 = util.img_as_ubyte(img_2_double)
+
+        plt.figure(), io.imshow(img_2_double), plt.title("1 white")
+        plt.figure(), plt.gray(), plt.imshow(img_dicom_uint8), plt.title("2 torax")
+        plt.figure(), plt.gray(), plt.imshow(img_4_double), plt.title("3 white")
+        plt.figure(), io.imshow(img_4), plt.title("4 mamografia")
+        plt.show()
 
 
 def ex_8(item: str = "") -> None:
@@ -401,7 +406,7 @@ def ex_homework() -> None:
 if __name__ == "__main__":
     pl_class = 1
     exercise = 7
-    item = "b"
+    item = "c"
 
     function_name = f"ex_{exercise}"
     function_to_call = locals()[function_name]
