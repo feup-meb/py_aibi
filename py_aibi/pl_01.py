@@ -2,6 +2,7 @@ from skimage import io
 from pydicom import dcmread
 import numpy as np
 import matplotlib.pyplot as plt
+from medpy.io import load, save
 
 
 def ex_1(item: str = "") -> None:
@@ -37,8 +38,8 @@ def ex_2(item: str = "") -> None:
         print(info_dicom)
 
     elif item == "c":
-        print("Verificar no painel inferior esquerdo do MatLAB se aparecem as \
-            duas variáveis (Img_Dicom e Info_dicom).")
+        print("Check MatLAB's lower left panel if the 2 variables are listed\n"
+              f"(Img_Dicom e Info_dicom).")
 
     elif item == "d":
         info_dicom = dcmread(f"{img_folder}/Chest_XRay.dcm")
@@ -70,15 +71,21 @@ def ex_3(item: str = "") -> None:
         print(f"Size of img_dicom is: {np.shape(img_dicom_size)}")
 
     elif item == "d":
-        # There is no python function similar to funtcion whos.
-        # whos __ Img_1 Img_2 Img_Dicom
         img_1 = io.imread(f"{img_folder}/mona.tif")
         img_2 = io.imread(f"{img_folder}/mamografia.bmp")
         img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
 
-        print(f"Size of img_1 is: {type(img_1)}")
-        print(f"Size of img_2 is: {type(img_2)}")
-        print(f"Size of img_dicom is: {type(img_dicom)}")
+        # whos __ Img_1 Img_2 Img_Dicom
+        print("There is no equivalent function for 'whos' in Python.")
+        print(f"On MatLAB, class = uint16. On Python is int16.")
+
+        print(f"{'Name':<16}{'Size':^16}{'Bytes':>16}  Class")
+        print(f"{'img_1':<16}{str(img_1.shape):^16}"
+              f"{str(img_1.nbytes):>16}  {img_1.dtype}")
+        print(f"{'img_2':<16}{str(img_2.shape):^16}"
+              f"{str(img_2.nbytes):>16}  {img_2.dtype}")
+        print(f"{'img_dicom':<16}{str(img_dicom.shape):^16}"
+              f"{str(img_dicom.nbytes):>16}  {img_dicom.dtype}")
 
 
 def ex_4(item: str = "") -> None:
@@ -88,43 +95,44 @@ def ex_4(item: str = "") -> None:
     if item == "a":
         img_1 = io.imread(f"{img_folder}/mona.tif")
 
-        plt.gray()
-        plt.imshow(img_1)
-        plt.show()
+        io.imshow(img_1)
+        io.show()
 
     elif item == "b":
         img_2 = io.imread(f"{img_folder}/mamografia.bmp")
 
-        plt.gray()
-        plt.imshow(img_2)
-        plt.show()
+        io.imshow(img_2)
+        io.show()
 
     elif item == "c":
         img_1 = io.imread(f"{img_folder}/mona.tif")
         img_2 = io.imread(f"{img_folder}/mamografia.bmp")
 
-        plt.figure(), plt.gray(), plt.imshow(img_1)
-        plt.figure(), plt.gray(), plt.imshow(img_2)
-        plt.show()
+        plt.figure(), io.imshow(img_1)
+        plt.figure(), io.imshow(img_2)
+        io.show()
 
     elif item == "d":
         img_1 = io.imread(f"{img_folder}/mona.tif")
         img_2 = io.imread(f"{img_folder}/mamografia.bmp")
 
-        plt.figure(), plt.gray(), plt.subplot(1, 2, 1), plt.imshow(img_1)
-        plt.subplot(1, 2, 2), plt.imshow(img_2)
-        plt.show()
+        plt.figure()
+        plt.subplot(1, 2, 1), io.imshow(img_1)
+        plt.subplot(1, 2, 2), io.imshow(img_2)
+        io.show()
 
     elif item == "e":
         img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
 
+        # for some reason, fails to keep in greyscale. Need to force.
         plt.gray()
-        plt.imshow(img_dicom)
+        plt.imshow(img_dicom.pixel_array)
         plt.show()
 
     elif item == "f":
         img_dicom = io.imread(f"{img_folder}/Chest_XRay.dcm")
 
+        # for some reason, fails to keep in greyscale. Need to force.
         plt.figure(), plt.gray()
         plt.imshow(img_dicom), plt.title("Original")
         plt.figure(), plt.gray()
@@ -146,32 +154,44 @@ def ex_5(item: str = "") -> None:
 
 def ex_6(item: str = "") -> None:
 
-    print(f"Aula 1, exercício 6{item}")
+    print(f"\nAula 1, exercício 6{item}")
 
     if item == "a":
-        # imwrite(Img_2, "mamografia.tif")
-        pass
+        img_2 = io.imread(f"{img_folder}/mamografia.bmp")
+        io.imsave(f"{img_folder}/mamografia.tif", img_2)
 
     elif item == "b":
-        # imwrite(Img_1, "mona.jpg", 'Quality', 0.5)
-        # Img_2a = imread("mamografia.tif")
-        # Img_1a = imread("mona.jpg")
-        # figure(1), imshow(Img_2a), figure(2), imshow(Img_1a)
-        pass
+        img_1 = io.imread(f"{img_folder}/mona.tif")
+        io.imsave(f"{img_folder}/mona.jpg", img_1, quality=1)
+        img_1a = io.imread(f"{img_folder}/mona.jpg")
+
+        img_2 = io.imread(f"{img_folder}/mamografia.tif")
+
+        plt.figure(1), io.imshow(img_2)
+        plt.figure(2), io.imshow(img_1a)
+        plt.show()
 
     elif item == "c":
+        img_1 = io.imread(f"{img_folder}/mamografia.tif")
+        img_2 = io.imread(f"{img_folder}/mona.jpg")
+        # TODO: Check package similar to imfinfo, to read image metadata
+        print("Check package similar to imfinfo, to read image metadata")
         # imfinfo("mamografia.tif")
         # imfinfo("mona.jpg")
-        pass
 
     elif item == "d":
-        # imwrite(Img_Dicom, "micro_radiografia.tif")
-        pass
+        img_dicom, info_dicom = load(f"{img_folder}/Chest_XRay.dcm")
+        save(img_dicom, f"{img_folder}/micro_radiografia.tif")
 
     elif item == "e":
-        # Img_Dicom_tif = imread("micro_radiografia.tif")
-        # whos __ Img_Dicom_tif
-        pass
+        img_dicom_tif = io.imread(f"{img_folder}/micro_radiografia.tif")
+
+        print("There is no equivalent function for 'whos' in Python.")
+        print(f"On MatLAB, class = uint16. On Python is int16.")
+
+        print(f"{'Name':<16}{'Size':^16}{'Bytes':>16}  Class")
+        print(f"{'img_dicom':<16}{str(img_dicom_tif.shape):^16}"
+              f"{str(img_dicom_tif.nbytes):>16}  {img_dicom_tif.dtype}")
 
 
 def ex_7(item: str = "") -> None:
@@ -179,8 +199,8 @@ def ex_7(item: str = "") -> None:
     print(f"Aula 1, exercício 7{item}")
 
     if item == "a":
-        # % Verificar na ajuda do MatLAB
-        pass
+        print("Read MatLAB help for information on data classes")
+        print("uint8, uint16, double and logical")
 
     elif item == "b":
         # Img_2_double = double(Img_2);
@@ -250,9 +270,9 @@ def ex_8(item: str = "") -> None:
 
 def ex_9(item: str = "") -> None:
 
-    if not item:
-        # close all;
+    print(f"\nAula 1, exercício 9{item}")
 
+    if not item:
         # % Exibe Img_1
         # figure, imshow(Img_1)
 
@@ -308,20 +328,20 @@ def ex_9(item: str = "") -> None:
 
 def ex_10(item: str = "") -> None:
 
-    print(f"Aula 1, exercício 10{item}")
+    print(f"\nAula 1, exercício 10{item}")
 
     if item == "a":
         # % Ler documentação
-        pass
+        print("Read the documentation for ")
 
     elif item == "b":
         # % Ler documentação
-        pass
+        print("Read the documentation for ")
 
 
 def ex_11(item: str = "") -> None:
 
-    print(f"Aula 1, exercício 11{item}")
+    print(f"A\nula 1, exercício 11{item}")
 
     if item == "a":
         # img_rgb = imread("retinografia.tif"); % Lê a imagem em cores
@@ -358,7 +378,7 @@ def ex_11(item: str = "") -> None:
 
 def ex_homework() -> None:
 
-    print(f"Aula 1, HOMEWORK")
+    print(f"\nAula 1, HOMEWORK")
 
     # % Reads file info from all ".png" in "images" folder
     # files_info = dir("images/*.png")
@@ -380,8 +400,8 @@ def ex_homework() -> None:
 
 if __name__ == "__main__":
     pl_class = 1
-    exercise = 4
-    item = "f"
+    exercise = 7
+    item = "b"
 
     function_name = f"ex_{exercise}"
     function_to_call = locals()[function_name]
