@@ -178,13 +178,13 @@ Img_3_med = medfilt2(Img_3_A, f_size); % median filter
 Img_3_avg = imfilter(Img_3_A, Img_3_avg_w); % average filter
 
 figure(13)
-subplot(2, 6, [1]), imshow(Img_3_A), title('imagem 1.a')
+subplot(2, 6, 1), imshow(Img_3_A), title('imagem 1.a')
 subplot(2, 6, [2 3]), imhist(Img_3_A), title('histograma 1.a')
-subplot(2, 6, [4]), imshow(Img_3_gaus), title('imagem 1.b')
+subplot(2, 6, 4), imshow(Img_3_gaus), title('imagem 1.b')
 subplot(2, 6, [5 6]), imhist(Img_3_gaus), title('histograma 1.b')
-subplot(2, 6, [7]), imshow(Img_3_med), title('imagem 1.c')
+subplot(2, 6, 7), imshow(Img_3_med), title('imagem 1.c')
 subplot(2, 6, [8 9]), imhist(Img_3_med), title('histograma 1.c')
-subplot(2, 6, [10]), imshow(Img_3_avg), title('imagem 1.d')
+subplot(2, 6, 10), imshow(Img_3_avg), title('imagem 1.d')
 subplot(2, 6, [11 12]), imhist(Img_3_avg), title('histograma 1.d')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 3.B.
@@ -208,14 +208,14 @@ for i = 3:2:9
 end
 
 figure(14)
-subplot(3, 6, [1]), imshow(Img_3_B), title('original image 1.a')
+subplot(3, 6, 1), imshow(Img_3_B), title('original image 1.a')
 subplot(3, 6, [2 3]), imhist(Img_3_B), title('original image 1.a')
 k = 1;
 
 for i = 3:2:9
     k = k + 3;
     caption = sprintf('gaussian filter (%dx%d)', i, i);
-    subplot(3, 6, [k])
+    subplot(3, 6, k)
     imshow(eval(['Img_3_gaus_' num2str(i)]))
     title(caption)
 
@@ -225,15 +225,14 @@ for i = 3:2:9
 end
 
 figure(15)
-subplot(3, 6, [1]), imshow(Img_3_B), title('original image 1.a')
+subplot(3, 6, 1), imshow(Img_3_B), title('original image 1.a')
 subplot(3, 6, [2 3]), imhist(Img_3_B), title('original image 1.a')
 k = 1;
 
 for i = 3:2:9
     k = k + 3;
-    caption = ['average filter (' num2str(i) 'x' num2str(i) ')'];
     caption = sprintf('average filter (%dx%d)', i, i);
-    subplot(3, 6, [k])
+    subplot(3, 6, k)
     imshow(eval(['Img_3_avg_' num2str(i)]))
     title(caption)
 
@@ -243,14 +242,14 @@ for i = 3:2:9
 end
 
 figure(16)
-subplot(3, 6, [1]), imshow(Img_3_B), title('original image 1.a')
+subplot(3, 6, 1), imshow(Img_3_B), title('original image 1.a')
 subplot(3, 6, [2 3]), imhist(Img_3_B), title('original image 1.a')
 k = 1;
 
 for i = 3:2:9
     k = k + 3;
     caption = sprintf('median filter (%dx%d)', i, i);
-    subplot(3, 6, [k])
+    subplot(3, 6, k)
     imshow(eval(['Img_3_med_' num2str(i)])),
     title(caption)
 
@@ -311,11 +310,11 @@ plot_filter(3, 6, eval(['Img_3_C_med_' num2str(i)]),  'median')
 % - tamanho de filtro: 3x4 para filtros assimétricos (rectangle)
 figure(20)
 plot_base(2, 6, Img_3_C,  'original image 1.a')
-subplot(2, 6, [4]), imshow(Img_3_C_rect), title('filtro retangular')
+subplot(2, 6, 4), imshow(Img_3_C_rect), title('filtro retangular')
 subplot(2, 6, [5 6]), imhist(Img_3_C_rect), title('filtro retangular')
-subplot(2, 6, [7]), imshow(Img_3_C_cross), title('filtro em cruz')
+subplot(2, 6, 7), imshow(Img_3_C_cross), title('filtro em cruz')
 subplot(2, 6, [8 9]), imhist(Img_3_C_cross), title('filtro em cruz')
-subplot(2, 6, [10]), imshow(Img_3_C_diag), title('filtro diagonal')
+subplot(2, 6, 10), imshow(Img_3_C_diag), title('filtro diagonal')
 subplot(2, 6, [11 12]), imhist(Img_3_C_diag), title('filtro diagonal')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 4.
@@ -488,7 +487,7 @@ function g = histretch(f, f_max, f_min, g_max, g_min)
 end
 
 function plot_base(rows, cols, img, title_str)
-    subplot(rows, cols, [1]), imshow(img), title(title_str)
+    subplot(rows, cols, 1), imshow(img), title(title_str)
     subplot(rows, cols, [2 3]), imhist(img), title(title_str)
 end
 
@@ -498,7 +497,7 @@ function plot_filter(rows, cols, filter_val, base_title)
     for i = 3:2:9
         k = k + 3;
         title_str = sprintf('%s filter (%dx%d)', base_title, i, i);
-        subplot(rows, cols, [k])
+        subplot(rows, cols, k)
         imshow(filter_val), title(title_str)
         subplot(rows, cols, [(k + 1) (k + 2)])
         imhist(filter_val), title(title_str)
