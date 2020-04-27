@@ -155,19 +155,47 @@ clc;
 % subplot(1, 3, 3), imshow(img_5_th), title('top-hat')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 6.A.
-img_6 = imread("angio.tif");
-img_6_th = imtophat(img_6, strel('disk', 9));
-img_6_bh = imbothat(img_6, strel('disk', 9));
+% img_6 = imread("angio.tif");
+% img_6_th = imtophat(img_6, strel('disk', 9));
+% img_6_bh = imbothat(img_6, strel('disk', 9));
 
-figure()
-subplot(1, 3, 1), imshow(img_6), title('original image')
-subplot(1, 3, 2), imshow(img_6_th), title('top-hat')
-subplot(1, 3, 3), imshow(img_6_bh), title('bottom-hat')
+% figure()
+% subplot(1, 3, 1), imshow(img_6), title('original image')
+% subplot(1, 3, 2), imshow(img_6_th), title('top-hat')
+% subplot(1, 3, 3), imshow(img_6_bh), title('bottom-hat')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 6.B.
+% img_6 = imread("angio.tif");
+% img_6_th = imtophat(img_6, strel('disk', 9));
+% img_6_bh = imbothat(img_6, strel('disk', 9));
+% img_6_sum = imadd(img_6, img_6_th);
+
+% figure()
+% subplot(1, 3, 1), imshow(img_6), title('original image')
+% subplot(1, 3, 2), imshow(img_6_th), title('top-hat')
+% subplot(1, 3, 3), imshow(img_6_sum), title('original + top-hat')
+% The reslting image have more contrast
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 6.C.
+% img_6 = imread("angio.tif");
+% img_6_th = imtophat(img_6, strel('disk', 9));
+% img_6_bh = imbothat(img_6, strel('disk', 9));
+% img_6_sum = imadd(img_6, img_6_th);
+% img_6_diff = imsubtract(img_6_sum, img_6_bh);
+
+% figure()
+% subplot(2, 3, 1), imshow(img_6), title('original image')
+% subplot(2, 3, 2), imshow(img_6_th), title('top-hat')
+% subplot(2, 3, 3), imshow(img_6_bh), title('bottom-hat')
+% subplot(2, 3, 5), imshow(img_6_sum), title('original + top-hat')
+% subplot(2, 3, 6), imshow(img_6_diff), title('original + top-hat - bottom-hat')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 7.
+img_7 = imread("blister.tif");
+img_7_bin = imread("blister_bin.tif");
+
+figure()
+subplot(1, 3, 1), imshow(img_7), title('original image')
+subplot(1, 3, 2), imshow(img_7_bin), title('binarized')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Funções
