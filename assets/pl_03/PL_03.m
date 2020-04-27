@@ -41,7 +41,7 @@ clc;
 % ex_1_closing = imclose(ex_1, ex_1_se);
 % ex_1_closing2 = bwmorph(ex_1,  'close');
 
-% figure(1)
+% figure()
 % subplot(3, 3, 1), imshow(ex_1), title('original image')
 % subplot(3, 3, 2), imshow(ex_1_dilation), title('Image dilation')
 % subplot(3, 3, 3), imshow(ex_1_erosion), title('Image erosion')
@@ -54,7 +54,7 @@ clc;
 % img_2 = imread("imp_digital_ruido.tif");
 % ex_2_se = strel('square', 3);
 
-% figure(2)
+% figure()
 % subplot(1, 2, 1), imshow(img_2), title('original image')
 % subplot(1, 2, 2), imshow(imopen(img_2, ex_2_se)), title('processed image')
 
@@ -65,38 +65,104 @@ clc;
 % img_3_erosion = imerode(img_3, ex_3_se);
 % img_3_mg = imsubtract(img_3_dilation, img_3_erosion);
 
-% figure(3)
+% figure()
 % subplot(2, 2, 1), imshow(img_3), title('original image')
 % subplot(2, 2, 2), imshow(img_3_dilation), title('processed image (dilation)')
 % subplot(2, 2, 3), imshow(img_3_erosion), title('processed image (erosion)')
 % subplot(2, 2, 4), imshow(img_3_mg), title('processed image (morph. grad.)')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 4.A.
-img_4 = imread("histo_1.tif");
-ex_4_se = strel('square', 3);
-img_4_dilation = imdilate(img_4, ex_4_se);
-img_4_erosion = imerode(img_4, ex_4_se);
-img_4_a = imclose(img_4, ex_4_se);
-img_4_b = imopen(img_4, ex_4_se);
+% img_4 = imread("histo_1.tif");
+% ex_4_se_3 = strel('square', 3);
+% img_4_a = imclose(img_4, ex_4_se_3);
+% img_4_b = imopen(img_4, ex_4_se_3);
 
-figure(4)
-subplot(2, 3, 1), imshow(img_4), title('original image')
-subplot(2, 3, 2), imshow(img_4_a), title('close image')
-subplot(2, 3, 3), imshow(img_4_a), title('open image')
-subplot(2, 3, 5), imshow(img_4_dilation), title('dilation image')
-subplot(2, 3, 6), imshow(img_4_erosion), title('erosion image')
+% img_4_c = imopen(img_4_a, ex_4_se_3);
+% img_4_d = imclose(img_4_b, ex_4_se_3);
+
+% figure()
+% subplot(1, 3, 1), imshow(img_4), title('original image')
+% subplot(1, 3, 2), imshow(img_4_c), title('open on close image')
+% subplot(1, 3, 3), imshow(img_4_d), title('close on open image')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 4.B.
+% img_4 = imread("histo_1.tif");
+% for i = 3:2:9
+%     ex_4_se = strel('square', i);
+
+%     genvarname('img_4_a_', num2str(i));
+%     genvarname('img_4_b_', num2str(i));
+%     genvarname('img_4_c_', num2str(i));
+%     genvarname('img_4_d_', num2str(i));
+
+%     eval(['img_4_a_' num2str(i) ' = imclose(img_4, ex_4_se); '])
+%     eval(['img_4_b_' num2str(i) ' = imopen(img_4, ex_4_se); '])
+%     eval(['img_4_c_' num2str(i) ' = imopen(img_4_a_' num2str(i) ', ex_4_se); '])
+%     eval(['img_4_d_' num2str(i) ' = imclose(img_4_b_' num2str(i) ', ex_4_se); '])
+
+%     figure()
+%     subplot(1, 3, 1), imshow(img_4)
+%     title('original image')
+
+%     subplot(1, 3, 2), imshow(eval(['img_4_c_' num2str(i)]))
+%     title(sprintf('open on close image (%dx%d)', i, i))
+
+%     subplot(1, 3, 3), imshow(eval(['img_4_d_' num2str(i)]))
+%     title(sprintf('close on open image (%dx%d)', i, i))
+% end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 5.A.
+% img_5 = imread("angio.tif");
+% figure(), imshow(img_5), title('original image')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 5.B.
+% Apply an opening operator using an appropriate structuring element (with
+% an adequate shape and size) to estimate of the background image.
+% possible shapes:
+% diamond, disk, line, octagon, rectangle, square, sphere, cube, cuboid
+% img_5 = imread("angio.tif");
+% shape =  'disk';
+% img_5_open_disk_3 = imopen(img_5, strel(shape, 3));
+% img_5_open_disk_5 = imopen(img_5, strel(shape, 5));
+% img_5_open_disk_7 = imopen(img_5, strel(shape, 7));
+% img_5_open_disk_9 = imopen(img_5, strel(shape, 9));
+
+% figure()
+% subplot(2, 2, 1), imshow(img_5_open_disk_3), title('img_5_open_disk_5')
+% subplot(2, 2, 2), imshow(img_5_open_disk_5), title('img_5_open_disk_5')
+% subplot(2, 2, 3), imshow(img_5_open_disk_7), title('img_5_open_disk_7')
+% subplot(2, 2, 4), imshow(img_5_open_disk_9), title('img_5_open_disk_9')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 5.C.
+% Subtract the background image from the original one and display the result.
+% img_5 = imread("angio.tif");
+% img_5_open_disk_9 = imopen(img_5, strel('disk', 9));
+% img_5_mg = imsubtract(img_5, img_5_open_disk_9);
+
+% figure()
+% subplot(1, 2, 1), imshow(img_5), title('original image')
+% subplot(1, 2, 2), imshow(img_5_mg), title('image - background')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 5.D.
+% img_5 = imread("angio.tif");
+% img_5_open_disk_9 = imopen(img_5, strel('disk', 9));
+% img_5_mg = imsubtract(img_5, img_5_open_disk_9);
+% img_5_th = imtophat(img_5, strel('disk', 9));
+
+% figure()
+% subplot(1, 3, 1), imshow(img_5), title('original image')
+% subplot(1, 3, 2), imshow(img_5_mg), title('image - background')
+% subplot(1, 3, 3), imshow(img_5_th), title('top-hat')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 6.A.
+img_6 = imread("angio.tif");
+img_6_th = imtophat(img_6, strel('disk', 9));
+img_6_bh = imbothat(img_6, strel('disk', 9));
+
+figure()
+subplot(1, 3, 1), imshow(img_6), title('original image')
+subplot(1, 3, 2), imshow(img_6_th), title('top-hat')
+subplot(1, 3, 3), imshow(img_6_bh), title('bottom-hat')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 6.B.
 
