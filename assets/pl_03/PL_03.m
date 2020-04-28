@@ -192,10 +192,18 @@ clc;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 7.
 img_7 = imread("blister.tif");
-img_7_bin = imread("blister_bin.tif");
+img_7_bin = imread("blister_bin.png");
 
-figure()
+img_7_se = strel('disk', 11);
+img_7_c = imclose(img_7_bin, img_7_se);
+img_7_oc = imopen(img_7_c, img_7_se);
+img_7_bkg = imsubtract(img_7_bin, img_7_oc);
+
+% figure()
 subplot(1, 3, 1), imshow(img_7), title('original image')
 subplot(1, 3, 2), imshow(img_7_bin), title('binarized')
+subplot(1, 3, 3), imshow(img_7_bkg), title('img\_7\_bkg')
+% % subplot(1, 3, 3), imshow(img_7_th), title('img\_7\_th')
+% subplot(1, 3, 3), imshow(img_7_bh), title('img\_7\_bh')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Funções
