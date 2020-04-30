@@ -9,17 +9,31 @@ clear;
 clc;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 1.
-% Escrever em papel.
+% (Pen and paper) Compute the magnitude of the Sobel operator on the
+%  highlighted points, and comment the results.
+
+img_1 = [
+    8 1 22 29 9 1 1;
+    9 21 21 25 22 5 3;
+    7 23 22 3 5 6 7;
+    8 26 21 2 1 4 9;
+    10 23 24 20 2 5 10;
+    11 2 25 21 26 2 5;
+    5 3 5 21 25 0 1;
+    4 5 9 10 11 13 6]
+
+im1 = ims(img_1)
+im2 = im2bw(img1,19)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 1.A.
-% img_1 = [[6 6 6 5 5 6 6]
-%          [6 4 3 4 4 4 7]
-%          [6 4 5 6 3 4 7]
-%          [5 3 6 7 6 4 5]
-%          [5 3 4 8 6 4 5]
-%          [5 5 4 2 3 4 5]
-%          [6 5 4 4 4 4 6]
-%          [7 6 6 5 5 6 7]];
+% img_1 = [6 6 6 5 5 6 6;
+%          6 4 3 4 4 4 7;
+%          6 4 5 6 3 4 7;
+%          5 3 6 7 6 4 5;
+%          5 3 4 8 6 4 5;
+%          5 5 4 2 3 4 5;
+%          6 5 4 4 4 4 6;
+%          7 6 6 5 5 6 7];
 %
 % int_v >= 8;
 % int >= (img_mean - 1);
@@ -88,14 +102,7 @@ clc;
 % subplot(1, 2, 2), imshow(img_4_double_2_levels, [])
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 5.
-img_5 = imread("smarties.tif");
-% [g, NR, SI, TI] = regiongrow(f, S, T)
 
-figure()
-subplot(1, 4, 1), imshow(img_5), title('img_5 original')
-subplot(1, 4, 2), imshow(img_5_135), title('img_5 threshold_135')
-subplot(1, 4, 3), imshow(img_5_150), title('img_5 threshold_150')
-subplot(1, 4, 4), imshow(img_5_170), title('img_5 threshold_170')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 5.A.
 % img_5 = imread("smarties.tif");
 
