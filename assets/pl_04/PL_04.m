@@ -184,9 +184,9 @@ clc;
 % subplot(1, 2, 2), imshow(img_5_final), title('segmented image')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 6.
-img_6 = imread("Hubble.tif");
-T = 90;
-img_6_gt = imquantize(img_6, T);
+% img_6 = imread("Hubble.tif");
+% T = 90;
+% img_6_gt = imquantize(img_6, T);
 
 % figure(),
 % subplot(1, 2, 1), imshow(img_6), title('original image'),
@@ -242,28 +242,72 @@ img_6_gt = imquantize(img_6, T);
 % subplot(3, 6, 18), imshow(g_18, []), title('T = 240; S = (240/2)'),
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 6.B.
-S = img_6 > 240;
-[img_6_final, NR, SI, TI] = regiongrow(img_6, S, T);
+% S = img_6 > 240;
+% [img_6_final, NR, SI, TI] = regiongrow(img_6, S, T);
 
-figure(),
-subplot(1, 3, 1), imshow(img_6), title('original image'),
-subplot(1, 3, 2), imshow(im2bw(img_6_final), []), title('Final image bin'),
-% subplot(1, 3, 2), imshow(img_6_final, []), title('final image'),
-subplot(1, 3, 3), imshow(img_6_gt, []), title('global T'),
-% subplot(2, 3, 5), imshow(TI, []), title('TI'),
-% subplot(2, 3, 6), imshow(SI, []), title('SI'),
+% figure(),
+% subplot(1, 3, 1), imshow(img_6), title('original image'),
+% subplot(1, 3, 2), imshow(im2bw(img_6_final), []), title('Final image bin'),
+% % subplot(1, 3, 2), imshow(img_6_final, []), title('final image'),
+% subplot(1, 3, 3), imshow(img_6_gt, []), title('global T'),
+% % subplot(2, 3, 5), imshow(TI, []), title('TI'),
+% % subplot(2, 3, 6), imshow(SI, []), title('SI'),
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 7.
 % Use the K-means clustering for segmenting the “retinograma.tif” image. Use
 % the default parameters and set the random seed to 1 via “rng(1)”. After
 % reading the image, assess the segmentation results for different values of
 % k using:
+img_7 = imread("retinograma.tif");
+
+rng(1);
+K = 5;
+
+% The RGB channels as features;
+img_7_r = img_7(:, :, 1); % Red channel
+img_7_g = img_7(:, :, 2); % Green channel
+img_7_b = img_7(:, :, 3); % Blue channel
+
+[r c ch] = size(img_7);
+
+R = img_7_r(:);
+G = img_7_g(:);
+B = img_7_b(:);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 7.A.
-% The RGB channels as features;
+[list_r kcenters_r] = kmeans(double(R), K);
+[list_g kcenters_g] = kmeans(double(G), K);
+[list_b kcenters_b] = kmeans(double(B), K);
+
+img_shape_r = reshape(list_r, r, c);
+img_shape_g = reshape(list_g, r, c);
+img_shape_b = reshape(list_b, r, c);
+
+figure(),
+subplot(2, 2, 1), imshow(img_7), title('original image'),
+subplot(2, 2, 2), imshow(mat2gray(kcenters_r(img_shape_r))), title('R'),
+subplot(2, 2, 3), imshow(mat2gray(kcenters_g(img_shape_g))), title('G'),
+subplot(2, 2, 4), imshow(mat2gray(kcenters_b(img_shape_b))), title('B'),
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 7.B.
 % Different combinations of 1 and 2 image color channels as input.
+RG = imadd(img_7_r(:), img_7_g(:));
+GB = imadd(img_7_g(:), img_7_b(:));
+BR = imadd(img_7_r(:), img_7_b(:));
+
+[list_rg kcenters_rg] = kmeans(double(RG), K);
+[list_gb kcenters_gb] = kmeans(double(GB), K);
+[list_br kcenters_br] = kmeans(double(BR), K);
+
+img_shape_rg = reshape(list_rg, r, c);
+img_shape_gb = reshape(list_gb, r, c);
+img_shape_br = reshape(list_br, r, c);
+
+figure(),
+subplot(1, 2, 1), imshow(img_7), title('original image'),
+subplot(1, 2, 2), imshow(mat2gray(kcenters_rg(img_shape_rg))), title('RG'),
+subplot(1, 2, 3), imshow(mat2gray(kcenters_gb(img_shape_gb))), title('GB'),
+subplot(1, 2, 4), imshow(mat2gray(kcenters_br(img_shape_br))), title('BR'),
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 8.
 % The “BWCircles.tif" image (left) must be segmented for separating the
